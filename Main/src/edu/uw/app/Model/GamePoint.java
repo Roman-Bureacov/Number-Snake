@@ -5,8 +5,8 @@ package edu.uw.app.Model;
  */
 class GamePoint implements Point {
 
-    private final int iPointX;
-    private final int iPointY;
+    private final int fPointX;
+    private final int fPointY;
 
     /**
      * Creates a new point with the specified points.
@@ -14,17 +14,17 @@ class GamePoint implements Point {
     public GamePoint(final int pPointX, final int pPointY) {
         super();
 
-        this.iPointX = pPointX;
-        this.iPointY = pPointY;
+        this.fPointX = pPointX;
+        this.fPointY = pPointY;
     }
 
     @Override
     public int getX() {
-        return this.iPointX;
+        return this.fPointX;
     }
 
     @Override
     public int getY() {
-        return this.iPointY;
+        return this.fPointY;
     }
 }

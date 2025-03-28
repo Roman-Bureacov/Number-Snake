@@ -19,11 +19,6 @@ class GamePath implements Path {
         this.fPath = new ArrayList<>();
     }
 
-    public GamePath(final List<Point> pPath) {
-        super();
-        this.fPath = pPath;
-    }
-
     @Override
     public void add(final Point pPoint) {
         // check if the deltas are greater than 1
@@ -72,13 +67,9 @@ class GamePath implements Path {
         }
 
         @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
+        public void resetParse() {
+            this.fIndex = 0;
         }
 
-        @Override
-        public void forEachRemaining(final Consumer<? super Point> pAction) {
-            throw new UnsupportedOperationException();
-        }
     }
 }
