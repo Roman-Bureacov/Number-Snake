@@ -1,6 +1,10 @@
 package edu.uw.app.Model;
 
-
+/**
+ * Class to test for valid paths.
+ * @author Roman Bureacov
+ * @version 2025-03-27
+ */
 class GamePathTester implements PathTester {
     private final PathTotalingAlgorithm fPathingAlgorithm;
 

@@ -2,6 +2,8 @@ package edu.uw.app.Model;
 
 /**
  * Interface for a path testing class to check for valid pathing.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
 interface PathTester {
     /**

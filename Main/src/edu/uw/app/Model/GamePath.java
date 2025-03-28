@@ -2,11 +2,11 @@ package edu.uw.app.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import javax.naming.OperationNotSupportedException;
 
 /**
  * Class that handles the pathing.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
 class GamePath implements Path {
 
@@ -19,6 +19,11 @@ class GamePath implements Path {
         this.fPath = new ArrayList<>();
     }
 
+    public GamePath(final int pX, final int pY) {
+        this();
+        this.fPath.add(new GamePoint(pX, pY));
+    }
+
     @Override
     public void add(final Point pPoint) {
         // check if the deltas are greater than 1
@@ -28,6 +33,11 @@ class GamePath implements Path {
             this.fIsValidPath = deltaX <= 1 && deltaY <= 1;
         }
         this.fPath.add(pPoint);
+    }
+
+    @Override
+    public void add(final int pX, final int pY) {
+        this.add(new GamePoint(pX, pY));
     }
 
     @Override

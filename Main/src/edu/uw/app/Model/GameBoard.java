@@ -1,17 +1,21 @@
 package edu.uw.app.Model;
 
+import java.beans.PropertyChangeSupport;
 import java.util.Random;
 
 /**
  * Class that represents the game board.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
-class GameBoard implements Board {
+class GameBoard extends AbstractPropertyChangeAdapter implements Board {
 
     private static final Random RANDOMIZER = new Random();
     private static final int MAX_VALUE = 10;
 
     private final int[][] fGameBoard;
     private PathTester fPathTester;
+    private final PropertyChangeSupport fPropChSupp = new PropertyChangeSupport(this);
 
     /**
      * Creates a new, square game board with the specified size.

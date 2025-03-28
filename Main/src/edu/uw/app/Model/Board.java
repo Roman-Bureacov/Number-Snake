@@ -2,6 +2,8 @@ package edu.uw.app.Model;
 
 /**
  * Represents the board that has the numbers.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
 interface Board {
 

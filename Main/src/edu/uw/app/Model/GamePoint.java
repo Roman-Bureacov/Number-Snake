@@ -2,6 +2,8 @@ package edu.uw.app.Model;
 
 /**
  * Class that represents a point on the game board.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
 class GamePoint implements Point {
 

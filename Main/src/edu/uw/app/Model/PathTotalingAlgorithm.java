@@ -6,6 +6,8 @@ package edu.uw.app.Model;
  *  <br>
  *  Takes two values, the first being the total and the second being the next value.
  *  The algorithm returns the result of appending the next to the total.
+ * @author Roman Bureacov
+ * @version 2025-03-27
  */
 @FunctionalInterface
 interface PathTotalingAlgorithm {
