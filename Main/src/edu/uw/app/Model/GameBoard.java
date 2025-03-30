@@ -1,6 +1,7 @@
 package edu.uw.app.Model;
 
 import java.beans.PropertyChangeSupport;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -8,49 +9,21 @@ import java.util.Random;
  * @author Roman Bureacov
  * @version 2025-03-27
  */
-class GameBoard extends AbstractPropertyChangeAdapter implements Board {
+class GameBoard implements Board {
 
-    private static final Random RANDOMIZER = new Random();
-    private static final int MAX_VALUE = 10;
-
-    private final int[][] fGameBoard;
-    private PathTester fPathTester;
-    private final PropertyChangeSupport fPropChSupp = new PropertyChangeSupport(this);
+    private int[][] fGameBoard;
 
     /**
      * Creates a new, square game board with the specified size.
      */
     public GameBoard(final int pSize) {
-        // default path tester will just sum values at points
-        this(pSize, new GamePathTester(Integer::sum));
-    }
-
-    /**
-     * Creates a new, square game board with the specified size
-     * and path tester.
-     */
-    public GameBoard(final int pSize, final PathTester pTester) {
         super();
         this.fGameBoard = new int[pSize][pSize];
-        this.fPathTester = pTester;
     }
 
     @Override
-    public boolean testPath(final Path pPath, final int pTarget) {
-        return this.fPathTester.isValid(pPath)
-                && this.fPathTester.hasTarget(
-                        this, pPath, pTarget
-                );
-    }
-
-    @Override
-    public void reset() {
-        final int boardSize = this.fGameBoard.length;
-        for (int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
-                this.fGameBoard[row][col] = RANDOMIZER.nextInt(MAX_VALUE) + 1;
-            }
-        }
+    public void newBoard(final int pTarget, final PathTester pTester) {
+        // TODO
     }
 
     @Override
@@ -64,12 +37,35 @@ class GameBoard extends AbstractPropertyChangeAdapter implements Board {
     }
 
     @Override
+    public void set(final Point pPoint, final int pToInt) {
+        this.set(pPoint.getX(), pPoint.getY(), pToInt);
+    }
+
+    @Override
+    public void set(final int pX, final int pY, final int pToInt) {
+        this.fGameBoard[pX][pY] = pToInt;
+    }
+
+    @Override
     public int size() {
         return this.fGameBoard.length;
     }
 
     @Override
-    public void setPathTester(final PathTester pTester) {
-        this.fPathTester = pTester;
+    public int[][] getBoard() {
+        final int boardSize = this.fGameBoard.length;
+        final int[][] boardCopy = new int[boardSize][boardSize];
+        for (int row = 0; row < boardSize; row++) {
+            boardCopy[row] = Arrays.copyOf(this.fGameBoard[row], boardSize);
+        }
+        return boardCopy;
+    }
+
+    @Override
+    public void setSize(final int pSize) {
+        if (pSize <= 3) throw new IllegalArgumentException(
+                "Argument pSize for the board (%d) must be at least 3".formatted(pSize));
+        this.fGameBoard = new int[pSize][pSize];
+        GamePathTester.resetBoard(this);
     }
 }

@@ -17,5 +17,5 @@ interface PathTotalingAlgorithm {
      * @param pNext the next value to append into the total.
      * @return the result of the algorithm of appending next into total.
      */
-    int aggregate(int pTotal, int pNext);
+    int combine(int pTotal, int pNext);
 }

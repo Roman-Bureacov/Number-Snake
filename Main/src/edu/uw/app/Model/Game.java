@@ -50,4 +50,16 @@ public interface Game {
      * @param pTarget the target value
      */
     void setTarget(int pTarget);
+
+    /**
+     * Sets the size of the game board.
+     * @param pSize the new size for the game board.
+     */
+    void setGameBoardSize(int pSize);
+
+    /**
+     * Gets the current size of the game board.
+     * @return the size of the current game board.
+     */
+    int getGameBoardSize();
 }

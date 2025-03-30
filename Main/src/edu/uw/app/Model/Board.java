@@ -7,6 +7,9 @@ package edu.uw.app.Model;
  */
 interface Board {
 
+    /** Property name for if the board failed to find a solution. */
+    String PROPERTY_NO_SOLUTION = "there was no solution for target";
+
     /**
      * Returns the value at the specified point.
      */
@@ -18,23 +21,34 @@ interface Board {
     int get(int pX, int pY);
 
     /**
+     * Sets the coordinate at the board to the value.
+     */
+    void set(int pX, int pY, int pToInt);
+
+    /**
+     * Sets the point at the board to the value.
+     */
+    void set(Point pPoint, int pToInt);
+
+    /**
      * Returns the size of the board.
      */
     int size();
 
     /**
-     * Resets the game board with new random numbers.
+     * Resizes the board. Size must be at least 3 or greater.
      */
-    void reset();
+    void setSize(int pSize);
 
     /**
-     * Test the given path with the current board.
-     * @return if the path is valid.
+     * Resets the game board with new random numbers, creating
+     * a new board for a new game.
+     * @throws IllegalStateException thrown when the board fails to find a solution for the target
      */
-    boolean testPath(Path pPath, int pTarget);
+    void newBoard(int pTarget, PathTester pTester) throws IllegalStateException;
 
     /**
-     * Sets the testing path algorithm for the board.
+     * Returns a copy representation for the current board.
      */
-    void setPathTester(PathTester pTester);
+    int[][] getBoard();
 }

@@ -29,4 +29,16 @@ class GamePoint implements Point {
     public int getY() {
         return this.fPointY;
     }
+
+    @Override
+    public boolean equals(final Object pOther) {
+        return pOther instanceof final Point p
+                && p.getX() == this.getX()
+                && p.getY() == this.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(this.fPointX, this.fPointY);
+    }
 }

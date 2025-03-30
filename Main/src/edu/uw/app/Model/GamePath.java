@@ -1,6 +1,7 @@
 package edu.uw.app.Model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ class GamePath implements Path {
 
     public GamePath() {
         super();
-        this.fPath = new ArrayList<>();
+        this.fPath = new LinkedList<>();
     }
 
     public GamePath(final int pX, final int pY) {
@@ -80,6 +81,5 @@ class GamePath implements Path {
         public void resetParse() {
             this.fIndex = 0;
         }
-
     }
 }

@@ -9,6 +9,7 @@ class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
     private final Board fBoard;
     private int fTarget;
     private Path fCurrentPath;
+    private PathTester fPathTester;
 
     /**
      * Creates the game.
@@ -18,10 +19,15 @@ class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
         this.fBoard = new GameBoard(3);
     }
 
+    /**
+     * Creates the game with the specified path
+     * @param
+     */
+
 
     @Override
     public void newGame(final int pTarget) {
-        this.fBoard.reset();
+        this.fBoard.newBoard(pTarget, /* TODO: path tester supplied here */);
         this.fTarget = pTarget;
         this.fPropChSupp.firePropertyChange(PROPERTY_NEW_GAME, null, null);
     }
@@ -38,10 +44,12 @@ class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
     }
 
     @Override
-    public boolean resolvePath() {
-        final boolean validPath = this.fBoard.testPath(this.fCurrentPath, this.fTarget);
+    public boolean resolvePath() throws IllegalStateException {
+        final int[][] oldBoard = this.fBoard.getBoard();
+        final boolean validPath = this./* TODO: supply path tester */.resolvePath(this.fCurrentPath, this.fTarget);
+        final int[][] newBoard = this.fBoard.getBoard();
         if (validPath) {
-            this.fPropChSupp.firePropertyChange(PROPERTY_GOOD_PATH, null, this.fCurrentPath);
+            this.fPropChSupp.firePropertyChange(PROPERTY_GOOD_PATH, oldBoard, newBoard);
         } else {
             this.fPropChSupp.firePropertyChange(PROPERTY_BAD_PATH, null, this.fCurrentPath);
         }
@@ -52,5 +60,15 @@ class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
     @Override
     public void setTarget(final int pTarget) {
         this.fTarget = pTarget;
+    }
+
+    @Override
+    public int getGameBoardSize() {
+        return this.fBoard.size();
+    }
+
+    @Override
+    public void setGameBoardSize(final int pSize) {
+        this.fBoard.setSize(pSize);
     }
 }

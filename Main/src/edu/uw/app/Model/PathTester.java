@@ -9,7 +9,7 @@ interface PathTester {
     /**
      * Test to see if the pathing is valid.
      */
-    boolean isValid(Path pPath);
+    boolean isValidPath(Path pPath);
 
     /**
      * Test to see if the path contains the target value based on the algorithm.
@@ -19,5 +19,24 @@ interface PathTester {
      * <br>
      * {@code (sum, next) -> sum + next}
      */
-    boolean hasTarget(Board pBoard, Path pPath, int pTarget);
+    boolean pathHasTarget(Board pBoard, Path pPath, int pTarget);
+
+    /**
+     * Tests if a given board contains a solution for the target.
+     * @param pBoard the board to look for the solution within
+     * @param pTarget the target to look for
+     */
+    boolean solutionExists(Board pBoard, int pTarget);
+
+    /**
+     * Test the given path with the current board. Clears the points if the path is valid.
+     * @return if the path is valid.
+     */
+    boolean resolvePath(Board pBoard, Path pPath, int pTarget);
+
+    /**
+     * resets the board with new values.
+     */
+    void resetBoard(Board pBoard);
+
 }
