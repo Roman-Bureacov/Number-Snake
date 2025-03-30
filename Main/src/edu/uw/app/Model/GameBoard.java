@@ -1,8 +1,6 @@
 package edu.uw.app.Model;
 
-import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Class that represents the game board.
@@ -22,8 +20,10 @@ class GameBoard implements Board {
     }
 
     @Override
-    public void newBoard(final int pTarget, final PathTester pTester) {
+    public void newBoard(final int pTarget, final PathTotalingAlgorithm pAlg)
+            throws IllegalStateException {
         // TODO
+
     }
 
     @Override
@@ -63,9 +63,9 @@ class GameBoard implements Board {
 
     @Override
     public void setSize(final int pSize) {
-        if (pSize <= 3) throw new IllegalArgumentException(
+        if (pSize < 3) throw new IllegalArgumentException(
                 "Argument pSize for the board (%d) must be at least 3".formatted(pSize));
         this.fGameBoard = new int[pSize][pSize];
-        GamePathTester.resetBoard(this);
+        PathTester.resetBoard(this);
     }
 }

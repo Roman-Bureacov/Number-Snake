@@ -45,7 +45,7 @@ interface Board {
      * a new board for a new game.
      * @throws IllegalStateException thrown when the board fails to find a solution for the target
      */
-    void newBoard(int pTarget, PathTester pTester) throws IllegalStateException;
+    void newBoard(int pTarget, PathTotalingAlgorithm pTester) throws IllegalStateException;
 
     /**
      * Returns a copy representation for the current board.
