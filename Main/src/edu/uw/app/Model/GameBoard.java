@@ -9,21 +9,20 @@ import java.util.Arrays;
  */
 class GameBoard implements Board {
 
-    private int[][] fGameBoard;
+    private final int[][] fGameBoard;
 
     /**
      * Creates a new, square game board with the specified size.
      */
     public GameBoard(final int pSize) {
         super();
+        if (pSize < 3) throw new IllegalArgumentException(
+                "Argument pSize for the board (%d) must be at least 3".formatted(pSize));
+        else if (10 < pSize) throw new IllegalArgumentException(
+                "Argument pSize is unreasonably large (%d > 10)".formatted(pSize)
+        );
+
         this.fGameBoard = new int[pSize][pSize];
-    }
-
-    @Override
-    public void newBoard(final int pTarget, final PathTotalingAlgorithm pAlg)
-            throws IllegalStateException {
-        // TODO
-
     }
 
     @Override
@@ -61,11 +60,4 @@ class GameBoard implements Board {
         return boardCopy;
     }
 
-    @Override
-    public void setSize(final int pSize) {
-        if (pSize < 3) throw new IllegalArgumentException(
-                "Argument pSize for the board (%d) must be at least 3".formatted(pSize));
-        this.fGameBoard = new int[pSize][pSize];
-        PathTester.resetBoard(this);
-    }
 }

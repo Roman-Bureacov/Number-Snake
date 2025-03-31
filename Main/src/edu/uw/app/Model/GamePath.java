@@ -1,6 +1,5 @@
 package edu.uw.app.Model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ class GamePath implements Path {
 
     private final List<Point> fPath;
     private boolean fIsValidPath = true;
-
 
     public GamePath() {
         super();

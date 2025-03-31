@@ -6,63 +6,57 @@ package edu.uw.app.Model;
  * @version 2025-03-27
  */
 class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
-    private final Board fBoard;
-    private int fTarget;
-    private Path fCurrentPath;
-    private PathTotalingAlgorithm fAlg;
+    private final BoardHandler fBoardHandler;
 
     /**
      * Creates the game.
      */
     public NumberSnakeGame() {
         super();
-        this.fBoard = new GameBoard(3);
+        this.fBoardHandler = new GameBoardHandler(3, Integer::sum);
     }
 
     @Override
     public void newGame(final int pTarget) {
-        this.fBoard.newBoard(pTarget, fAlg);
-        this.fTarget = pTarget;
+        this.fBoardHandler.newGame(pTarget);
         this.fPropChSupp.firePropertyChange(PROPERTY_NEW_GAME, null, null);
     }
 
     @Override
     public void startPath(final int pX, final int pY) {
-        this.fCurrentPath = new GamePath();
+        this.fBoardHandler.startPath(pX, pY);
     }
 
     @Override
     public void addToPath(final int pX, final int pY) {
-        if (this.fCurrentPath == null) this.startPath(pX, pY);
-        else this.fCurrentPath.add(pX, pY);
+        this.fBoardHandler.addPoint(pX, pY);
     }
 
     @Override
     public boolean resolvePath() throws IllegalStateException {
-        final int[][] oldBoard = this.fBoard.getBoard();
-        final boolean validPath = PathTester.testPath(this.fBoard, this.fCurrentPath, this.fTarget, this.fAlg);
-        final int[][] newBoard = this.fBoard.getBoard();
+        final int[][] oldBoard = this.fBoardHandler.getBoard();
+        final boolean validPath = this.fBoardHandler.resolvePath();
         if (validPath) {
+            final int[][] newBoard = this.fBoardHandler.getBoard();
             this.fPropChSupp.firePropertyChange(PROPERTY_GOOD_PATH, oldBoard, newBoard);
         } else {
-            this.fPropChSupp.firePropertyChange(PROPERTY_BAD_PATH, null, this.fCurrentPath);
+            this.fPropChSupp.firePropertyChange(PROPERTY_BAD_PATH, null, null);
         }
-        this.fCurrentPath = null;
         return validPath;
     }
 
     @Override
     public void setTarget(final int pTarget) {
-        this.fTarget = pTarget;
+        this.fBoardHandler.setTarget(pTarget);
     }
 
     @Override
     public int getGameBoardSize() {
-        return this.fBoard.size();
+        return this.fBoardHandler.getBoardSize();
     }
 
     @Override
     public void setGameBoardSize(final int pSize) {
-        this.fBoard.setSize(pSize);
+        this.fBoardHandler.setBoardSize(pSize);
     }
 }
