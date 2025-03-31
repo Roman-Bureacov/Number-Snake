@@ -5,7 +5,7 @@ package edu.uw.app.Model;
  * @author Roman Bureacov
  * @version 2025-03-27
  */
-class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
+public class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
     private final BoardHandler fBoardHandler;
 
     /**
