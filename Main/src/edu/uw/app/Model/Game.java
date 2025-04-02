@@ -52,6 +52,12 @@ public interface Game {
     void setTarget(int pTarget);
 
     /**
+     * Gets the target that the path should resolve to.
+     * @return the target
+     */
+    int getTarget();
+
+    /**
      * Sets the size of the game board.
      * @param pSize the new size for the game board.
      */

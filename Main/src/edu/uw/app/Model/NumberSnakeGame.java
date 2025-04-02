@@ -51,6 +51,11 @@ public class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Ga
     }
 
     @Override
+    public int getTarget() {
+        return this.fBoardHandler.getTarget();
+    }
+
+    @Override
     public int getGameBoardSize() {
         return this.fBoardHandler.getBoardSize();
     }
