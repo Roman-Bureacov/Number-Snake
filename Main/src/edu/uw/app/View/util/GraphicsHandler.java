@@ -20,7 +20,7 @@ public final class GraphicsHandler {
      * @param pGraphics the graphics object to manipulate
      * @return the graphics object with antialiasing enabled and cast to Graphics 2D
      */
-    public static Graphics2D enableAntiAliasing(final Graphics pGraphics) {
+    public static Graphics2D enableAntiAliasingAndReturn(final Graphics pGraphics) {
         final Graphics2D lGraphics = (Graphics2D) pGraphics;
         lGraphics.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
