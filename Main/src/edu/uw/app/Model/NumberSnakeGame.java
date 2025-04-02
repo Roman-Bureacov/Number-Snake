@@ -5,7 +5,7 @@ package edu.uw.app.Model;
  * @author Roman Bureacov
  * @version 2025-03-27
  */
-public class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Game {
+public class NumberSnakeGame extends PropertyChangeEnabledGame {
     private final BoardHandler fBoardHandler;
 
     /**
@@ -34,15 +34,15 @@ public class NumberSnakeGame extends AbstractPropertyChangeAdapter implements Ga
 
     @Override
     public boolean resolvePath() throws IllegalStateException {
-        final int[][] oldBoard = this.fBoardHandler.getBoard();
-        final boolean validPath = this.fBoardHandler.resolvePath();
-        if (validPath) {
-            final int[][] newBoard = this.fBoardHandler.getBoard();
-            this.fPropChSupp.firePropertyChange(PROPERTY_GOOD_PATH, oldBoard, newBoard);
+        final int[][] lOldBoard = this.fBoardHandler.getBoard();
+        final boolean lValidPath = this.fBoardHandler.resolvePath();
+        if (lValidPath) {
+            final int[][] lNewBoard = this.fBoardHandler.getBoard();
+            this.fPropChSupp.firePropertyChange(PROPERTY_GOOD_PATH, lOldBoard, lNewBoard);
         } else {
             this.fPropChSupp.firePropertyChange(PROPERTY_BAD_PATH, null, null);
         }
-        return validPath;
+        return lValidPath;
     }
 
     @Override

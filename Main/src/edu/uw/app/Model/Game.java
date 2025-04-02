@@ -1,20 +1,11 @@
 package edu.uw.app.Model;
 
-import java.beans.PropertyChangeListener;
-
 /**
  * Interface specifying the game.
  * @author Roman Bureacov
  * @version 2025-03-27
  */
 public interface Game {
-
-    /** Property name for if the path successfully resolved. */
-    String PROPERTY_GOOD_PATH = "path resolved";
-    /** Property name for if the path failed to resolve. */
-    String PROPERTY_BAD_PATH = "path did not resolve";
-    /** Property name for when a new game is created */
-    String PROPERTY_NEW_GAME = "started new game";
 
     /**
      * Starts a new game with the target specified.
