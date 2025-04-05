@@ -80,7 +80,7 @@ class PathTesterSizeFourTest {
         assertFalse(
                 this.iTester.solutionExists(pTarget + 1),
                 "tester erroneously said it found a path for length %d"
-                        .formatted(pTarget)
+                        .formatted(pTarget + 1)
         );
     }
 }
