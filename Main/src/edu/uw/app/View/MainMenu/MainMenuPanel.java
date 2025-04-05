@@ -1,9 +1,12 @@
 package edu.uw.app.View.MainMenu;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -28,9 +31,16 @@ public class MainMenuPanel extends JPanel {
     private final JButton fStartGameButton;
     private final JButton fSettingsButton;
 
+    private static final Font TITLE_FONT;
+    private static final Font BUTTON_FONT;
+
     static {
-        BUTTON_DIMENSION = new Dimension(100, 25);
-        TITLE_DIMENSION = new Dimension(150, 50);
+        final int lFontSize = 50;
+        BUTTON_DIMENSION = new Dimension(100, 100);
+        TITLE_DIMENSION = new Dimension(500, lFontSize * 2 + 50 * 2);
+
+        TITLE_FONT = new Font("Serif", Font.BOLD, lFontSize);
+        BUTTON_FONT = new Font("Sans-Serif", Font.PLAIN, 12);
     }
 
     /**
@@ -43,29 +53,37 @@ public class MainMenuPanel extends JPanel {
         this.fStartGameButton = new JButton();
         this.fSettingsButton = new JButton();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setup();
         this.setupActionListeners();
     }
 
     private void setup() {
+        this.setLayout(new BorderLayout());
+
         this.fTitle.setText("Number Snake!");
-        this.fTitle.setSize(TITLE_DIMENSION);
-        this.fTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.fTitle.setFont(TITLE_FONT);
+        this.fTitle.setPreferredSize(TITLE_DIMENSION);
+        this.fTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        this.fTitle.setVerticalAlignment(SwingConstants.CENTER);
+
+        this.add(this.fTitle, BorderLayout.NORTH);
+
+        final JPanel lButtonPanel = new JPanel();
+        lButtonPanel.setLayout(new BoxLayout(lButtonPanel, BoxLayout.Y_AXIS));
 
         this.fStartGameButton.setText("Start Game");
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.fStartGameButton.setSize(BUTTON_DIMENSION);
+        this.fStartGameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.fStartGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.fStartGameButton.setFont(BUTTON_FONT);
+        lButtonPanel.add(this.fStartGameButton);
 
         this.fSettingsButton.setText("Settings");
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.fSettingsButton.setSize(BUTTON_DIMENSION);
+        this.fSettingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.fSettingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.fSettingsButton.setFont(BUTTON_FONT);
+        lButtonPanel.add(this.fSettingsButton);
 
-        this.add(this.fTitle);
-        this.add(this.fStartGameButton);
-        this.add(this.fSettingsButton);
+        this.add(lButtonPanel, BorderLayout.SOUTH);
     }
 
     private void setupActionListeners() {
@@ -76,5 +94,4 @@ public class MainMenuPanel extends JPanel {
                         null)
         );
     }
-
 }

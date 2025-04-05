@@ -1,7 +1,7 @@
 package edu.uw.app.View.Game;
 
-import edu.uw.app.Model.Game;
 import edu.uw.app.Model.NumberSnakeGame;
+import edu.uw.app.Model.PropertyChangeEnabledGame;
 import javax.swing.JPanel;
 
 /**
@@ -15,9 +15,11 @@ public class GamePanel extends JPanel {
     /** property name for requesting to go back to the main menu. */
     public static final String PROPERTY_REQUEST_MAIN_MENU = "I want to go back!";
 
-    private final Game fGame = new NumberSnakeGame();
+    private final PropertyChangeEnabledGame fGame = new NumberSnakeGame();
+    private final JPanel fGameBoardPanel = new JPanel(); // TODO
 
     public GamePanel() {
         super();
+
     }
 }
