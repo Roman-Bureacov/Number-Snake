@@ -41,4 +41,9 @@ class GamePoint implements Point {
     public int hashCode() {
         return java.util.Objects.hash(this.fPointX, this.fPointY);
     }
+
+    @Override
+    public String toString() {
+        return "(%d, %d)".formatted(this.fPointX, this.fPointY);
+    }
 }
