@@ -53,11 +53,25 @@ class PathTesterSizeFourTest {
         this.testPath(lPoints.length);
     }
 
+    @Test
+    public void testBigCPath() {
+        final Point[] lPoints = new GamePoint[] {
+                new GamePoint(2, 0),
+                new GamePoint(1, 0),
+                new GamePoint(0, 1),
+                new GamePoint(0, 2),
+                new GamePoint(1, 3),
+                new GamePoint(2, 3),
+        };
+        this.testPath(lPoints);
+    }
+
     private void clearBoard() {
         final int lBoardSize = this.iBoard.size();
+        final int lBadValue = 999;
         for (int row = 0; row < lBoardSize; row++) {
             for (int col = 0; col < lBoardSize; col++) {
-                this.iBoard.set(col, row, 0);
+                this.iBoard.set(col, row, lBadValue);
             }
         }
     }
@@ -82,5 +96,10 @@ class PathTesterSizeFourTest {
                 "tester erroneously said it found a path for length %d"
                         .formatted(pTarget + 1)
         );
+    }
+
+    private void testPath(final Point[] pPoints) {
+        this.setPath(pPoints);
+        this.testPath(pPoints.length);
     }
 }
