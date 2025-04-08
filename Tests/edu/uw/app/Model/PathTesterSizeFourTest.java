@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 class PathTesterSizeFourTest {
 
+    private static final int BAD_POINT_VALUE = 999;
+    private static final int BASIC_POINT_VALUE = 1;
+
     private final Board iBoard = new GameBoard(4);
     private final PathTester iTester = new GamePathTester(
             this.iBoard, Integer::sum);
@@ -19,24 +22,28 @@ class PathTesterSizeFourTest {
 
     @Test
     public void testSPath() {
-        this.iBoard.set(1, 2, 1);
-        this.iBoard.set(2, 3, 1);
-        this.iBoard.set(2, 2, 1);
-        this.iBoard.set(2, 1, 1);
-        this.iBoard.set(3, 2, 1);
-        this.testPath(5);
+        final Point[] lPoints = new GamePoint[] {
+                new GamePoint(1, 2),
+                new GamePoint(2, 3),
+                new GamePoint(2, 2),
+                new GamePoint(2, 1),
+                new GamePoint(3, 2),
+        };
+        this.testPath(lPoints);
     }
 
 
     @Test
     public void testLongSPath() {
-        this.iBoard.set(1, 2, 1);
-        this.iBoard.set(2, 3, 1);
-        this.iBoard.set(2, 2, 1);
-        this.iBoard.set(2, 1, 1);
-        this.iBoard.set(2, 0, 1);
-        this.iBoard.set(3, 1, 1);
-        this.testPath(6);
+        final Point[] lPoints = new GamePoint[] {
+                new GamePoint(1, 2),
+                new GamePoint(2, 3),
+                new GamePoint(2, 2),
+                new GamePoint(2, 1),
+                new GamePoint(2, 0),
+                new GamePoint(3, 1),      
+        };
+        this.testPath(lPoints);
     }
 
     @Test
@@ -49,8 +56,7 @@ class PathTesterSizeFourTest {
                 new GamePoint(2, 0),
                 new GamePoint(3, 1),
         };
-        this.setPath(lPoints);
-        this.testPath(lPoints.length);
+        this.testPath(lPoints);
     }
 
     @Test
@@ -68,10 +74,9 @@ class PathTesterSizeFourTest {
 
     private void clearBoard() {
         final int lBoardSize = this.iBoard.size();
-        final int lBadValue = 999;
         for (int row = 0; row < lBoardSize; row++) {
             for (int col = 0; col < lBoardSize; col++) {
-                this.iBoard.set(col, row, lBadValue);
+                this.iBoard.set(col, row, BAD_POINT_VALUE);
             }
         }
     }
@@ -82,10 +87,10 @@ class PathTesterSizeFourTest {
      * @param pPoints the points to set to 1
      */
     private void setPath(final Point[] pPoints) {
-        for (final Point p : pPoints) this.iBoard.set(p, 1);
+        for (final Point p : pPoints) this.iBoard.set(p, BASIC_POINT_VALUE);
     }
 
-    private void testPath(final int pTarget) {
+    private void testPath(final int pTarget, final Point[] pPoints) {
         assertTrue(
                 this.iTester.solutionExists(pTarget),
                 "tester failed to find the path of length %d"
@@ -96,10 +101,15 @@ class PathTesterSizeFourTest {
                 "tester erroneously said it found a path for length %d"
                         .formatted(pTarget + 1)
         );
+        this.iBoard.set(pPoints[0], BAD_POINT_VALUE);
+        assertFalse(
+                this.iTester.solutionExists(pTarget),
+                "tester erroneously said there was a solution after removing a point"
+        );
     }
 
     private void testPath(final Point[] pPoints) {
         this.setPath(pPoints);
-        this.testPath(pPoints.length);
+        this.testPath(pPoints.length, pPoints);
     }
 }
