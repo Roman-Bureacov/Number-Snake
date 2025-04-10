@@ -85,7 +85,6 @@ class GamePathTester implements PathTester {
                 final boolean lResult = this.search(
                         pTarget, this.iBoard.get(col, row),
                         row, col,
-                        row, col,
                         lPoints
                 );
 
@@ -99,13 +98,12 @@ class GamePathTester implements PathTester {
     // recursive search merely to see if a valid path exists
     private boolean search(final int pTarget, final int pTotal,
                            final int pRow, final int pCol,
-                           final int pMinRow, final int pMinCol,
                            final Set<Point> pPoints) {
         for (final Direction dir : Direction.values()) {
             final int lNewRow = pRow + this.getRowOffset(dir);
             final int lNewCol = pCol + this.getColOffset(dir);
 
-            if (this.isValidPoint(lNewRow, lNewCol, pMinRow, pMinCol)) {
+            if (this.isValidPoint(lNewRow, lNewCol)) {
                 final Point lNewPoint = new GamePoint(lNewCol, lNewRow);
                 if (!pPoints.contains(lNewPoint)) {
                     pPoints.add(lNewPoint);
@@ -118,7 +116,6 @@ class GamePathTester implements PathTester {
                         final boolean lResult = this.search(
                                 pTarget, lNewTotal,
                                 lNewRow, lNewCol,
-                                pMinRow, pMinCol,
                                 pPoints);
                         if (lResult) return true;
                     }
@@ -146,18 +143,10 @@ class GamePathTester implements PathTester {
         };
     }
 
-    private boolean isValidPoint(final int pRow, final int pCol,
-                                 final int pMinRow, final int pMinCol) {
+    private boolean isValidPoint(final int pRow, final int pCol) {
         final int lBoardSize = this.iBoard.size();
-        // every path that traces to a prior column on the minimum row is
-        // already traced,
-        // eg: starting from (1,1) and ending on (0,1),
-        // is already traced starting from (0,1) to (1,1)
-        if (pRow == pMinRow && pCol < pMinCol) return false;
-        else {
-            return 0 <= pCol && pCol < lBoardSize
-                    && pMinRow <= pRow && pRow < lBoardSize;
-        }
+        return 0 <= pCol && pCol < lBoardSize
+                && 0 <= pRow && pRow < lBoardSize;
     }
 
 }
