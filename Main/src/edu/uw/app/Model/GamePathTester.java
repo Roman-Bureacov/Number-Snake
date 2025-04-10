@@ -10,8 +10,8 @@ import java.util.Set;
  */
 class GamePathTester implements PathTester {
 
-    private final Board fBoard;
-    private final PathTotalingAlgorithm fAlg;
+    private final Board iBoard;
+    private final PathTotalingAlgorithm iAlg;
 
     private enum Direction {
         N,
@@ -26,33 +26,33 @@ class GamePathTester implements PathTester {
 
     public GamePathTester(final Board pBoard, final PathTotalingAlgorithm pAlg) {
         super();
-        this.fBoard = pBoard;
-        this.fAlg = pAlg;
+        this.iBoard = pBoard;
+        this.iAlg = pAlg;
     }
 
     @Override
     public boolean isValidPathFormat(final Path pPath) {
         if (pPath == null) return false;
 
-        final ParsingPath p = pPath.getParsingPath();
-        final int pathSize = p.size();
+        final ParsingPath lParsingPath = pPath.getParsingPath();
+        final int lPathSize = lParsingPath.size();
 
-        if (pathSize <= 0) return false;
+        if (lPathSize <= 0) return false;
 
         // test if consecutive points are at most 1 space apart
-        for (int i = 0; i < pathSize - 1; i++) {
-            final Point A = p.get(i);
-            final Point B = p.get(i + 1);
-            final int deltaX = Math.abs(A.getX() - B.getX());
-            final int deltaY = Math.abs(A.getY() - B.getY());
+        for (int i = 0; i < lPathSize - 1; i++) {
+            final Point lFirst = lParsingPath.get(i);
+            final Point lSecond = lParsingPath.get(i + 1);
+            final int lDeltaX = Math.abs(lFirst.getX() - lSecond.getX());
+            final int lDeltaY = Math.abs(lFirst.getY() - lSecond.getY());
 
-            if (deltaX > 1 || deltaY > 1) return false;
+            if (lDeltaX > 1 || lDeltaY > 1) return false;
         }
 
         // test if there are no intersecting points
-        for (int i = 0; i < pathSize - 1; i++) {
-            for (int j = i + 1; j < pathSize; j++) {
-                if (p.get(i).equals(p.get(j)))
+        for (int i = 0; i < lPathSize - 1; i++) {
+            for (int j = i + 1; j < lPathSize; j++) {
+                if (lParsingPath.get(i).equals(lParsingPath.get(j)))
                     return false;
             }
         }
@@ -62,34 +62,34 @@ class GamePathTester implements PathTester {
 
     @Override
     public boolean pathHasTarget(final Path pPath, final int pTarget) {
-        final ParsingPath path = pPath.getParsingPath();
-        int total = 0;
+        final ParsingPath lPath = pPath.getParsingPath();
+        int lTotal = 0;
 
-        for (Point p = path.next(); path.hasNext(); p = path.next()) {
-            total = this.fAlg.combine(total, this.fBoard.get(p));
+        for (Point p = lPath.next(); lPath.hasNext(); p = lPath.next()) {
+            lTotal = this.iAlg.combine(lTotal, this.iBoard.get(p));
 
-            if (pTarget < total) return false;
+            if (pTarget < lTotal) return false;
         }
 
-        return pTarget == total;
+        return pTarget == lTotal;
     }
 
     @Override
     public boolean solutionExists(final int pTarget) {
         // search each row, going down. Every solution going up will have already been found.
-        final int size = this.fBoard.size();
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                final Set<Point> points = new HashSet<>(5);
-                points.add(new GamePoint(col, row));
-                final boolean result = this.search(
-                        pTarget, this.fBoard.get(col, row),
+        final int lSize = this.iBoard.size();
+        for (int row = 0; row < lSize; row++) {
+            for (int col = 0; col < lSize; col++) {
+                final Set<Point> lPoints = new HashSet<>(5);
+                lPoints.add(new GamePoint(col, row));
+                final boolean lResult = this.search(
+                        pTarget, this.iBoard.get(col, row),
                         row, col,
                         row, col,
-                        points
+                        lPoints
                 );
 
-                if (result) return true;
+                if (lResult) return true;
             }
         }
         // thus no solution has been found
@@ -102,27 +102,27 @@ class GamePathTester implements PathTester {
                            final int pMinRow, final int pMinCol,
                            final Set<Point> pPoints) {
         for (final Direction dir : Direction.values()) {
-            final int newRow = pRow + this.getRowOffset(dir);
-            final int newCol = pCol + this.getColOffset(dir);
+            final int lNewRow = pRow + this.getRowOffset(dir);
+            final int lNewCol = pCol + this.getColOffset(dir);
 
-            if (this.isValidPoint(newRow, newCol, pMinRow, pMinCol)) {
-                final Point newPoint = new GamePoint(newCol, newRow);
-                if (!pPoints.contains(newPoint)) {
-                    pPoints.add(newPoint);
-                    final int newTotal = this.fAlg.combine(
-                            pTotal, this.fBoard.get(newPoint)
+            if (this.isValidPoint(lNewRow, lNewCol, pMinRow, pMinCol)) {
+                final Point lNewPoint = new GamePoint(lNewCol, lNewRow);
+                if (!pPoints.contains(lNewPoint)) {
+                    pPoints.add(lNewPoint);
+                    final int lNewTotal = this.iAlg.combine(
+                            pTotal, this.iBoard.get(lNewPoint)
                     );
 
-                    if (newTotal == pTarget) return true;
-                    else if (newTotal < pTarget) {
-                        final boolean result = this.search(
-                                pTarget, newTotal,
-                                newRow, newCol,
+                    if (lNewTotal == pTarget) return true;
+                    else if (lNewTotal < pTarget) {
+                        final boolean lResult = this.search(
+                                pTarget, lNewTotal,
+                                lNewRow, lNewCol,
                                 pMinRow, pMinCol,
                                 pPoints);
-                        if (result) return true;
+                        if (lResult) return true;
                     }
-                    pPoints.remove(newPoint);
+                    pPoints.remove(lNewPoint);
                 }
             }
         }
@@ -148,15 +148,15 @@ class GamePathTester implements PathTester {
 
     private boolean isValidPoint(final int pRow, final int pCol,
                                  final int pMinRow, final int pMinCol) {
-        final int boardSize = this.fBoard.size();
+        final int lBoardSize = this.iBoard.size();
         // every path that traces to a prior column on the minimum row is
         // already traced,
         // eg: starting from (1,1) and ending on (0,1),
         // is already traced starting from (0,1) to (1,1)
         if (pRow == pMinRow && pCol < pMinCol) return false;
         else {
-            return 0 <= pCol && pCol < boardSize
-                    && pMinRow <= pRow && pRow < boardSize;
+            return 0 <= pCol && pCol < lBoardSize
+                    && pMinRow <= pRow && pRow < lBoardSize;
         }
     }
 
