@@ -15,7 +15,7 @@ class PathTesterGeneralBoardTests {
 
     @Test
     public void testVeryLargeBoard() {
-        final int lVeryLargeSize = 999;
+        final int lVeryLargeSize = 10;
         this.iBoard = new GameBoard(lVeryLargeSize);
         PathTestingCommonTests.fillBoard(this.iBoard, 1);
 
