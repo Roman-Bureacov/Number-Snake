@@ -32,6 +32,6 @@ public class PathTesterSizeFiveTest {
         this.iBoard.set(3, 4, lTarget / 2);
         this.iBoard.set(4, 4, lTarget / 2);
 
-        PathTestingCommonTests.testPath(lTarget, this.iBoard);
+        PathTestingCommonTests.testTarget(lTarget, this.iBoard);
     }
 }

@@ -22,7 +22,7 @@ final class PathTestingCommonTests {
      * @param pTarget the target to test for using summation
      * @param pBoard the board to test for
      */
-    public static void testPath(final int pTarget, final Board pBoard) {
+    public static void testTarget(final int pTarget, final Board pBoard) {
         final PathTester lTester = new GamePathTester(pBoard, Integer::sum);
         
         assertTrue(
@@ -41,9 +41,9 @@ final class PathTestingCommonTests {
      * sets and tests the path against the board
      * @param pPoints the path to test
      */
-    public static void testPath(final Point[] pPoints, final Board pBoard) {
+    public static void testTarget(final Point[] pPoints, final Board pBoard) {
         setPath(pPoints, pBoard);
-        testPath(pPoints.length, pBoard);
+        testTarget(pPoints.length, pBoard);
     }
 
 
