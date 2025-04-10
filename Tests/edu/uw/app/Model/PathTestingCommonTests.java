@@ -52,10 +52,19 @@ final class PathTestingCommonTests {
      * @param pBoard the board to fill
      */
     public static void clearBoard(final Board pBoard) {
+        fillBoard(pBoard, BAD_POINT_VALUE);
+    }
+
+    /**
+     * Fills the board with specified dummy values.
+     * @param pBoard the board to fill
+     * @param pValue the dummy value
+     */
+    public static void fillBoard(final Board pBoard, final int pValue) {
         final int lBoardSize = pBoard.size();
         for (int row = 0; row < lBoardSize; row++) {
             for (int col = 0; col < lBoardSize; col++) {
-                pBoard.set(col, row, BAD_POINT_VALUE);
+                pBoard.set(col, row, pValue);
             }
         }
     }
