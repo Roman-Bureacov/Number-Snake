@@ -12,6 +12,8 @@ import java.util.Set;
 final class PathGroupGenerator {
 
     private static final int SIZE = 4;
+    private static long sTests = 0L;
+
     /**
      * The eight possible directions to go in
      */
@@ -23,15 +25,28 @@ final class PathGroupGenerator {
 
     public static void main(final String... pArgs) {
 
-        final Set<Set<Point>> lPaths = getAllPaths(SIZE);
+        final long lStartTime = System.currentTimeMillis();
+        final Set<Set<Point>> lPaths = getAllPaths(5);
+        final long lEndTime = System.currentTimeMillis();
+        final long lTotalMillis = lEndTime - lStartTime;
 
-        System.out.println("Paths set size: " + lPaths.size());
+        final long lTotalSeconds = (lTotalMillis / 1000L) % 60L;
+        final long lTotalMinutes = lTotalMillis / 1000L / 60L;
+        final long lModdedMillis = lTotalMillis % 1000L;
+
+        System.out.format("Paths set size: %d\n", lPaths.size());
+        System.out.format("Number of tests done: %d\n", sTests);
+        System.out.format(
+                "Total time: %02d:%02d.%02d minutes\n",
+                lTotalMinutes, lTotalSeconds, lModdedMillis
+        );
+        /*
         lPaths.forEach(
                 set -> {
                     set.forEach(point -> System.out.format("(%d, %d) ", point.getX(), point.getY()));
                     System.out.println();
                 });
-
+        */
     }
 
     private PathGroupGenerator() {
@@ -48,6 +63,8 @@ final class PathGroupGenerator {
             final int lNewRow = pRow + getRowOffset(dir);
             final int lNewCol = pCol + getColOffset(dir);
             final Point lNewPoint = new GamePoint(lNewCol, lNewRow);
+
+            sTests++;
 
             if (isValid(pGridSize, pMinRow, pMinCol, lNewRow, lNewCol)
                     && !pPathPoints.contains(lNewPoint)) {
